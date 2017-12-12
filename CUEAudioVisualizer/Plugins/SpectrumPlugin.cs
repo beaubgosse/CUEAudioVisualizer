@@ -30,6 +30,12 @@ namespace CUEAudioVisualizer.Plugins
         private void SpectrumUpdateDelegate()
         {
             double brightness = Utility.Clamp(0.03f + (Host.SongBeat * 0.1f), 0f, 1f); //Keep brightness at least to 3% and clamp to 100% (Should never get anywhere near 100%)
+            
+            if (Math.Abs(Host.SongBeat) < .0001)
+            {
+                brightness = brightness * 10;
+            }
+
             Color backgroundColor = Utility.CalculateColorBrightness(Host.PrimaryColor, brightness);
             Host.Keyboard.Color = backgroundColor;
 
@@ -63,6 +69,12 @@ namespace CUEAudioVisualizer.Plugins
         private void SpectrumInvertingColorsDelegate()
         {
             double brightness = Utility.Clamp(0.03f + (Host.SongBeat * 0.1f), 0f, 1f); //Keep brightness at least to 3% and clamp to 100% (Should never get anywhere near 100%)
+
+            if (Math.Abs(Host.SongBeat) < .0001)
+            {
+                brightness = brightness * 10;
+            }
+
             Color backgroundColor = Utility.CalculateGradient(Host.SecondaryColor, Host.PrimaryColor, Host.AveragedVolume, brightness);
             Host.Keyboard.Color = backgroundColor;
 
